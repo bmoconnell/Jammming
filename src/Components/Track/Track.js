@@ -7,12 +7,14 @@ class Track extends React.Component{
     constructor(props){
         super(props);
         this.addTrack= this.addTrack.bind(this);
+        this.removeTrack= this.removeTrack.bind(this);
     }
  
     renderAction(){
-        if (this.props.isRemoval=== true){
+        if (this.props.isRemoval === true){
             return(
-                <button className= "Track-action">-</button>
+                <button className= "Track-action"
+                onClick = {this.removeTrack}>-</button>
             )
         }else{
             return <button className="Track-action"
@@ -20,8 +22,14 @@ class Track extends React.Component{
         }
     }
 
+    /* is append the correct action here? Do I actually want to reassign
+    the value instead? */
     addTrack(){
         this.props.onAdd.append(this.props.track);
+    }
+
+    removeTrack(){
+        this.props.onRemove.append(this.props.track);
     }
 
     render(){

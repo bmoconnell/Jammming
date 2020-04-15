@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './logo.ico';
+//import logo from './logo.ico';
 import './App.css';
 import { render } from '@testing-library/react';
 import SearchBar from "../SearchBar/SearchBar.js";
@@ -10,13 +10,11 @@ export class App extends React.Component {
   constructor(props){
     super(props);
     this.state= {
-      "searchResults": [{
-        name: "Lose It",
-        artist: "Eminem",
-        album: "Curtain Call",
-        id: "dunnoId"
-        
-    }],
+      searchResults: [{name: "Lose It", artist: "Eminem",
+      album: "Curtain Call",id: "dunnoId"
+        }, 
+        {name: "name2", artist: "artist2", album: "album2", id: "id2"}
+      ],
       
     "playlistName": "defaultplaylistName",
 
@@ -34,23 +32,26 @@ export class App extends React.Component {
     this.removeTrack= this.removeTrack.bind(this);
   }
 
+  /*do not understand why setState step is needed to add tracks to our
+  playlistTracks state when we have already pushed the relevant value
+  to the state. */
   addTrack(track){
-    if (this.state.playlistTracks.find(savedTrack => 
+    let tracks = this.state.playlistTracks;
+    if (tracks.find(savedTrack => 
       savedTrack.id === track.id)) {
       return;
     }else{
-      this.state.playlistTracks.append(track);
+      tracks.push(track);
+      this.setState({ playlistTracks: tracks})
     }
   }
 
   removeTrack(track){
-    const playlist = this.state.playlistTracks
-    if(this.state.playlistTracks.find(savedTrack =>
-      savedTrack.id === track.id)){
-       playlist.remove(track)
-      }else{
-        return;
-      }
+    let tracks = this.state.playlistTracks;
+    tracks= tracks.filter(currentTrack => {
+      return currentTrack.id !== track.id;
+    })
+    this.setState({playlistTracks: tracks});
   }
 
   render(){

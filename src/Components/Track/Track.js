@@ -11,25 +11,24 @@ class Track extends React.Component{
     }
  
     renderAction(){
-        if (this.props.isRemoval === true){
+        if (this.props.isRemoval){
             return(
                 <button className= "Track-action"
                 onClick = {this.removeTrack}>-</button>
             )
         }else{
-            return <button className="Track-action"
-            onClick= {this.addTrack}>+</button>
+            return (<button className="Track-action"
+            onClick= {this.addTrack}>+</button>)
         }
     }
 
-    /* is append the correct action here? Do I actually want to reassign
-    the value instead? */
+
     addTrack(){
-        this.props.onAdd.append(this.props.track);
+        this.props.onAdd(this.props.track);
     }
 
     removeTrack(){
-        this.props.onRemove.append(this.props.track);
+        this.props.onRemove(this.props.track);
     }
 
     render(){
@@ -41,7 +40,7 @@ class Track extends React.Component{
                     <h3>{this.props.track.name}</h3>
                     <p>{this.props.track.artist}| {this.props.track.album}</p>
                  </div>
-               
+               {this.renderAction()}
             </div>
         
         )

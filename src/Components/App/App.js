@@ -1,7 +1,7 @@
 import React from 'react';
 //import logo from './logo.ico';
 import './App.css';
-import { render } from '@testing-library/react';
+//import { render } from '@testing-library/react';
 import SearchBar from "../SearchBar/SearchBar.js";
 import SearchResults from "../SearchResults/SearchResults.js";
 import Playlist from "../Playlist/Playlist.js";
@@ -30,6 +30,7 @@ export class App extends React.Component {
 
     this.addTrack= this.addTrack.bind(this);
     this.removeTrack= this.removeTrack.bind(this);
+    this.updatePlaylistName= this.updatePlaylistName.bind(this);
   }
 
   /*do not understand why setState step is needed to add tracks to our
@@ -54,6 +55,10 @@ export class App extends React.Component {
     this.setState({playlistTracks: tracks});
   }
 
+  updatePlaylistName(name){
+    this.setState({playlistName: name}) 
+  }
+
   render(){
   return (
 <div>
@@ -66,7 +71,8 @@ export class App extends React.Component {
       onAdd= {this.addTrack}/>
       <Playlist playlistName= {this.state.playlistName} 
       playlistTracks= {this.state.playlistTracks}
-      onRemove= {this.removeTrack}/>
+      onRemove= {this.removeTrack}
+      onNameChange= {this.updatePlaylistName}/>
 
     </div>
   </div>

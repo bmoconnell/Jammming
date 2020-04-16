@@ -1,4 +1,6 @@
-const cliendId= "cbda1991bf8a4b16a7aa5946436b4739";
+const clientId= "cbda1991bf8a4b16a7aa5946436b4739";
+const redirectUri= "http://localhost:3000/";
+
 let accessToken;
 
 const Spotify =  {
@@ -25,11 +27,16 @@ const Spotify =  {
     
             window.history.pushState('Access Token', null, '/');
             return accessToken;
+        }else{
+            window.location.href= `https://accounts.spotify.com/authorize?
+            client_id=${clientId}&response_type=token
+            &scope=playlist-modify-public&redirect_uri=${redirectUri}`
         }
        
         }
     }
 
-
+/*if you get an error, check the else statement- not sure if
+carriage returns in the url are allowed */
 
 export default Spotify;

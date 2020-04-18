@@ -63,7 +63,7 @@ const Spotify =  {
         },
 
 
-        savePlaylist(playlistName, trackUris)
+        savePlaylist(playlistName, trackUris){
          if(!playlistName || !trackUris.length){
             return;
          };
@@ -84,7 +84,9 @@ const Spotify =  {
                  return fetch(`https://api.spotify.com/v1/users/${userId}/playlists`,
                  {headers: headers,
                   method: "POST",
-                  body: JSON.stringify({name: name})
+                  body: JSON.stringify({name: playlistName})
+                }
+                )
                 }).then(response => {
                     return response.json();
                 }).then(jsonResponse => {
@@ -93,11 +95,12 @@ const Spotify =  {
                     {headers: headers,
                     method: "POST",
                     body: JSON.stringify({uris: trackUris})
-                    }
-                })
-         };
+                    })
+         
+        })
+    }
+}
 
-        }
 
 
 

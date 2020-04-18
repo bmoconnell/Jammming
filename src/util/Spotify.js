@@ -21,9 +21,8 @@ const Spotify =  {
             
             /*clear the parameters, allowing us to set a new access 
             token when it expires */
-            window.setTimeout(() =>{
-                return accessToken= '', expiresIn * 1000
-            });
+            window.setTimeout(() => accessToken= '', expiresIn * 1000
+            );
     
             window.history.pushState('Access Token', null, '/');
             return accessToken;
@@ -32,9 +31,40 @@ const Spotify =  {
             client_id=${clientId}&response_type=token
             &scope=playlist-modify-public&redirect_uri=${redirectUri}`
         }
-       
+    
+        },
+
+        //will need to replace spaces in term with %20
+
+        search(term){
+            const accessToken= Spotify.getAccessToken();
+
+            fetch(`https://api.spotify.com/v1/search?q=${term}&type=track&limit=6`,
+            {headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+            }).then(response => {
+                return response.json()
+            }).then(jsonResponse => {
+
+                if(!jsonResponse.tracks){
+                    return [];
+                }else{
+                    return jsonResponse.tracks.items.map(track => ({
+                            id: track.id,
+                            name: track.name,
+                            artist: track.artists[0].name,
+                            album: track.album.name,
+                            uri: track.uri
+                        }));
+                    }
+                });
+            
+        },
+
         }
-    }
+
+
 
 /*if you get an error, check the else statement- not sure if
 carriage returns in the url are allowed */

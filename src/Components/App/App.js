@@ -5,6 +5,7 @@ import './App.css';
 import SearchBar from "../SearchBar/SearchBar.js";
 import SearchResults from "../SearchResults/SearchResults.js";
 import Playlist from "../Playlist/Playlist.js";
+import Spotify from "../../util/Spotify.js";
 
 export class App extends React.Component {
   constructor(props){
@@ -23,7 +24,8 @@ export class App extends React.Component {
         name:"playlistEnya",
         artist: "playlistEnyaName",
         album: "playlistEnyaAlbum",
-        id: "dunnoEnyaId"
+        id: "dunnoEnyaId",
+        uri: "bollock off"
       }   
       ]
     }
@@ -68,7 +70,12 @@ export class App extends React.Component {
   }
 
   search(term){
-    console.log(term);
+    /*my original code- check if it would have worked at the end
+    const spotifySearchResults=Spotify.search(term);
+    this.setState({searchResults: spotifySearchResults});*/
+    Spotify.search(term).then(searchResults => {
+      this.setState({searchResults:searchResults})
+    });
   }
 
   render(){
